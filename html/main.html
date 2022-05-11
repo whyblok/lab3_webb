@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 3</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+</head>
+<body>
+<div class="main">
+    <h2>Свайпер</h2>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img alt="Кораблик" src="../img/part1/1.jpg"></div>
+            <div class="swiper-slide"><img alt="Кораблик" src="../img/part1/2.png"></div>
+            <div class="swiper-slide"><img alt="Кораблик" src="../img/part1/3.jpg"></div>
+            <div class="swiper-slide"><img alt="Кораблик" src="../img/part1/4.jpg"></div>
+            <div class="swiper-slide"><img alt="Кораблик" src="../img/part1/5.jpeg"></div>
+            <div class="swiper-slide"><img alt="Кораблик" src="../img/part1/6.jpeg"></div>
+            <div class="swiper-slide"><img alt="Кораблик" src="../img/part1/7.png"></div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <h2>Калькулятор</h2>
+    <div class="calc">
+        <div class="content2">
+            <div class="calc_input">
+                <label for="type"></label><select class="select" id="type">
+                    <option selected value="1">Пополняемый</option>
+                    <option value="2">Срочный</option>
+                </select>
+                <label for="term"></label><select class="select" id="term">
+                </select>
+            </div>
+            <input class="contr_input" type="number" id="calc_contr" placeholder="Сумма вклада">
+            <button class="contr_button" id="calc_button">Рассчитать</button>
+        </div>
+        <div class="calc_output">
+            <p id="calc_sol">Выберите вид и срок вклада и введите сумму для расчётов!</p>
+            <p id="calc_sol2"></p>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

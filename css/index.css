@@ -1,0 +1,146 @@
+@import "normalize.css";
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.list {
+  width: 60%;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: auto;
+}
+
+.headd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 100px;
+}
+.swiper {
+    width: 600px;
+    height: 600px;
+}
+.name3 {
+    display: flex;
+    width: 90%;
+    margin-top: 20px;
+    font-size: larger;
+    justify-content: space-between;
+
+  }
+  
+
+.list2 {
+    display: flex;
+    /* flex-direction: row; */
+    /* width: auto; */
+    /* margin: 0 5px 5px 0; */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calc {
+  display: flex;
+  margin-bottom: 100px;
+}
+
+.calc_output {
+  text-align: center;
+  border: solid 2px black;
+  margin-left: 5%;
+}
+
+.content2 {
+  margin-right: 5%
+}
+
+@media screen and (max-width: 768px) {
+  .calc_input {
+      flex-direction: column;
+  }
+
+  .calc {
+      width: 120%;
+  }
+
+  .select, .contr_button {
+      width: 100%;
+  }
+  .swiper {
+      margin-bottom: 50px;
+      width: 100%;
+      height: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .calc_input {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .select, .contr_button, .contr_input {
+    margin-left: 20px;
+    position: sticky;
+}
+  .swiper {
+  margin-bottom: 50px;
+  width: 50%;
+  height: 50%;
+}
+  .calc {
+      width: 80%;
+  }
+
+  .calc_output {
+      margin-left: 10px;
+  }
+}
+
+.name1{
+  text-align: center;
+  margin-top: 50px;
+}
+
+.contr_input{
+  height: 36px;
+  margin-top: 10px;
+  padding: 0;
+  text-align: center;
+}
+
+.select, .contr_button {
+  height: 40px;
+  margin-top: 10px;
+  padding: 0;
+  text-align: center;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.calc_head {
+  text-align: center;
+}
+
+.calc_input {
+  display: flex;
+}
