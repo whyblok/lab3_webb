@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/calculator.js":
-/*!**************************!*\
-  !*** ./js/calculator.js ***!
-  \**************************/
+/***/ "./js/calc.js":
+/*!********************!*\
+  !*** ./js/calc.js ***!
+  \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -13,87 +13,116 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "calcButton": () => (/* binding */ calcButton),
 /* harmony export */   "calcTerm": () => (/* binding */ calcTerm),
 /* harmony export */   "onTypeChange": () => (/* binding */ onTypeChange),
+/* harmony export */   "setListener": () => (/* binding */ setListener),
 /* harmony export */   "typeOfDeposit": () => (/* binding */ typeOfDeposit)
 /* harmony export */ });
-const typeOfDeposit = document.getElementById("type");
-const calcButton = document.getElementById("calc_button");
+var typeOfDeposit = document.getElementById("type");
+var calcButton = document.getElementById("calc_button");
+var terms = document.getElementById("term");
+var calcSol = document.getElementById("calc_sol");
+var calcSol2 = document.getElementById("calc_sol2");
+var contr = document.getElementById("calc_contr");
+var refOptions = [{
+  months: 6,
+  percent: 10,
+  text: "6 месяцев - 20%"
+}, {
+  months: 12,
+  percent: 22,
+  text: "1 год - 22%"
+}, {
+  months: 18,
+  percent: 22.5,
+  text: "1,5 года - 15%"
+}, {
+  months: 24,
+  percent: 20,
+  text: "2 года - 10%"
+}];
+var termOptions = [{
+  months: 3,
+  percent: 5,
+  text: "3 месяца - 20%"
+}, {
+  months: 6,
+  percent: 11,
+  text: "6 месяцев - 22%"
+}, {
+  months: 9,
+  percent: 17.25,
+  text: "9 месяцев - 23%"
+}, {
+  months: 12,
+  percent: 24,
+  text: "1 год - 24%"
+}, {
+  months: 18,
+  percent: 27,
+  text: "1,5 года - 18%"
+}, {
+  months: 24,
+  percent: 30,
+  text: "2 года - 15%"
+}];
+var onTypeChange = function onTypeChange() {
+  var arr = [];
+  typeOfDeposit.value === "1" ? arr = refOptions : arr = termOptions;
 
-const terms = document.getElementById("term");
-const calcSol = document.getElementById("calc_sol");
-const calcSol2 = document.getElementById("calc_sol2");
-const contr = document.getElementById("calc_contr");
+  while (terms.options.length > 0) {
+    terms.remove(0);
+  }
 
+  for (var i = 0; i < arr.length; i++) {
+    var opt = document.createElement('option');
+    opt.value = arr[i].percent;
+    opt.innerHTML = "<p>".concat(arr[i].text, "</p>");
+    opt.id = "option".concat(i);
+    terms.appendChild(opt);
+  }
+};
+var calcTerm = function calcTerm() {
+  var vklad;
+  typeOfDeposit.value === "1" ? vklad = "Пополняемый" : vklad = "Срочный";
 
-const refOptions = [
-    {months: 6, percent: 10, text: "6 месяцев - 20%"},
-    {months: 12, percent: 22, text: "1 год - 22%"},
-    {months: 18, percent: 22.5, text: "1,5 года - 15%"},
-    {months: 24, percent: 20, text: "2 года - 10%"},
-];
-
-const termOptions = [
-    {months: 3, percent: 5, text: "3 месяца - 20%"},
-    {months: 6, percent: 11, text: "6 месяцев - 22%"},
-    {months: 9, percent: 17.25, text: "9 месяцев - 23%"},
-    {months: 12, percent: 24, text: "1 год - 24%"},
-    {months: 18, percent: 27, text: "1,5 года - 18%"},
-    {months: 24, percent: 30, text: "2 года - 15%"},
-];
-
-const onTypeChange = () => {
-    let arr = [];
-    typeOfDeposit.value === "1" ? arr = refOptions : arr = termOptions;
-
-    while (terms.options.length > 0) {
-        terms.remove(0);
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-        let opt = document.createElement('option');
-        opt.value = arr[i].percent;
-        opt.innerHTML = `<p>${arr[i].text}</p>`;
-        opt.id = `option${i}`;
-        terms.appendChild(opt);
-    }
-}
-
-const calcTerm = () => {
-    let vklad;
-    typeOfDeposit.value === "1" ? vklad = "Пополняемый" : vklad = "Срочный";
-    if (contr.value) {
-        if (contr.value <= 0) {
-            calcSol2.innerHTML = "<p style='color: red'> Введите правильную сумму!</p>"
-        } else {
-            let finalSol = Number(terms.value / 100 * contr.value) + Number(contr.value);
-            calcSol.textContent = `По вкладу "${vklad}" на срок и ставку ${terms.options[terms.selectedIndex].textContent}, при сумме вклада ${contr.value}`;
-            calcSol2.textContent = `В конце срока вы получите ${finalSol}р.`
-        }
+  if (contr.value) {
+    if (contr.value <= 0) {
+      calcSol2.innerHTML = "<p style='color: red'> Введите правильную сумму!</p>";
     } else {
-        calcSol.innerHTML = "<p style='color: red'>Введите сумму вклада!</p>"
-        calcSol2.textContent = "";
+      var finalSol = Number(terms.value / 100 * contr.value) + Number(contr.value);
+      calcSol.textContent = "\u041F\u043E \u0432\u043A\u043B\u0430\u0434\u0443 \"".concat(vklad, "\" \u043D\u0430 \u0441\u0440\u043E\u043A \u0438 \u0441\u0442\u0430\u0432\u043A\u0443 ").concat(terms.options[terms.selectedIndex].textContent, ", \u043F\u0440\u0438 \u0441\u0443\u043C\u043C\u0435 \u0432\u043A\u043B\u0430\u0434\u0430 ").concat(contr.value);
+      calcSol2.textContent = "\u0412 \u043A\u043E\u043D\u0446\u0435 \u0441\u0440\u043E\u043A\u0430 \u0432\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 ".concat(finalSol, "\u0440.");
     }
-}
+  } else {
+    calcSol.innerHTML = "<p style='color: red'>Введите сумму вклада!</p>";
+    calcSol2.textContent = "";
+  }
+};
+var setListener = function setListener(element, type, handler) {
+  if (element) {
+    return;
+  }
 
-
+  element.addEventListener(type, handler);
+};
 
 /***/ }),
 
-/***/ "./js/swipper.js":
-/*!***********************!*\
-  !*** ./js/swipper.js ***!
-  \***********************/
+/***/ "./js/swiper.js":
+/*!**********************!*\
+  !*** ./js/swiper.js ***!
+  \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "swiper": () => (/* binding */ swiper)
 /* harmony export */ });
-const swiper = new Swiper('.swiper', {
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    loop: true,
+var swiper = new Swiper('.swiper', {
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev'
+  },
+  loop: true
 });
 
 /***/ }),
@@ -291,76 +320,6 @@ module.exports = function (item) {
   }
 
   return [content].join("\n");
-};
-
-/***/ }),
-
-/***/ "./html/main.html":
-/*!************************!*\
-  !*** ./html/main.html ***!
-  \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/html-loader/dist/runtime/getUrl.js */ "./node_modules/html-loader/dist/runtime/getUrl.js");
-/* harmony import */ var _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___HTML_LOADER_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../img/part1/1.jpg */ "./img/part1/1.jpg"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../img/part1/2.png */ "./img/part1/2.png"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../img/part1/3.jpg */ "./img/part1/3.jpg"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(/*! ../img/part1/4.jpg */ "./img/part1/4.jpg"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_4___ = new URL(/* asset import */ __webpack_require__(/*! ../img/part1/5.jpeg */ "./img/part1/5.jpeg"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_5___ = new URL(/* asset import */ __webpack_require__(/*! ../img/part1/6.jpeg */ "./img/part1/6.jpeg"), __webpack_require__.b);
-var ___HTML_LOADER_IMPORT_6___ = new URL(/* asset import */ __webpack_require__(/*! ../img/part1/7.png */ "./img/part1/7.png"), __webpack_require__.b);
-// Module
-var ___HTML_LOADER_REPLACEMENT_0___ = _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default()(___HTML_LOADER_IMPORT_0___);
-var ___HTML_LOADER_REPLACEMENT_1___ = _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default()(___HTML_LOADER_IMPORT_1___);
-var ___HTML_LOADER_REPLACEMENT_2___ = _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default()(___HTML_LOADER_IMPORT_2___);
-var ___HTML_LOADER_REPLACEMENT_3___ = _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default()(___HTML_LOADER_IMPORT_3___);
-var ___HTML_LOADER_REPLACEMENT_4___ = _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default()(___HTML_LOADER_IMPORT_4___);
-var ___HTML_LOADER_REPLACEMENT_5___ = _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default()(___HTML_LOADER_IMPORT_5___);
-var ___HTML_LOADER_REPLACEMENT_6___ = _node_modules_html_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_0___default()(___HTML_LOADER_IMPORT_6___);
-var code = "<!DOCTYPE html>\n<html lang=\"ru\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Лабораторная работа 3</title>\n    <link rel=\"stylesheet\" href=\"https://unpkg.com/swiper@8/swiper-bundle.min.css\"/>\n</head>\n<body>\n<div class=\"main\">\n    <h2>Свайпер</h2>\n    <div class=\"swiper\">\n        <div class=\"swiper-wrapper\">\n            <div class=\"swiper-slide\"><img alt=\"Кораблик\" src=\"" + ___HTML_LOADER_REPLACEMENT_0___ + "\"></div>\n            <div class=\"swiper-slide\"><img alt=\"Кораблик\" src=\"" + ___HTML_LOADER_REPLACEMENT_1___ + "\"></div>\n            <div class=\"swiper-slide\"><img alt=\"Кораблик\" src=\"" + ___HTML_LOADER_REPLACEMENT_2___ + "\"></div>\n            <div class=\"swiper-slide\"><img alt=\"Кораблик\" src=\"" + ___HTML_LOADER_REPLACEMENT_3___ + "\"></div>\n            <div class=\"swiper-slide\"><img alt=\"Кораблик\" src=\"" + ___HTML_LOADER_REPLACEMENT_4___ + "\"></div>\n            <div class=\"swiper-slide\"><img alt=\"Кораблик\" src=\"" + ___HTML_LOADER_REPLACEMENT_5___ + "\"></div>\n            <div class=\"swiper-slide\"><img alt=\"Кораблик\" src=\"" + ___HTML_LOADER_REPLACEMENT_6___ + "\"></div>\n        </div>\n        <div class=\"swiper-button-next\"></div>\n        <div class=\"swiper-button-prev\"></div>\n    </div>\n    <h2>Калькулятор</h2>\n    <div class=\"calc\">\n        <div class=\"content2\">\n            <div class=\"calc_input\">\n                <label for=\"type\"></label><select class=\"select\" id=\"type\">\n                    <option selected value=\"1\">Пополняемый</option>\n                    <option value=\"2\">Срочный</option>\n                </select>\n                <label for=\"term\"></label><select class=\"select\" id=\"term\">\n                </select>\n            </div>\n            <input class=\"contr_input\" type=\"number\" id=\"calc_contr\" placeholder=\"Сумма вклада\">\n            <button class=\"contr_button\" id=\"calc_button\">Рассчитать</button>\n        </div>\n        <div class=\"calc_output\">\n            <p id=\"calc_sol\">Выберите вид и срок вклада и введите сумму для расчётов!</p>\n            <p id=\"calc_sol2\"></p>\n        </div>\n    </div>\n</div>\n<script src=\"https://unpkg.com/swiper@8/swiper-bundle.min.js\"></script>\n<script src=\"https://code.jquery.com/jquery-3.6.0.min.js\"></script>\n</body>\n</html>";
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
-
-/***/ }),
-
-/***/ "./node_modules/html-loader/dist/runtime/getUrl.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/html-loader/dist/runtime/getUrl.js ***!
-  \*********************************************************/
-/***/ ((module) => {
-
-
-
-module.exports = function (url, options) {
-  if (!options) {
-    // eslint-disable-next-line no-param-reassign
-    options = {};
-  }
-
-  if (!url) {
-    return url;
-  } // eslint-disable-next-line no-underscore-dangle, no-param-reassign
-
-
-  url = String(url.__esModule ? url.default : url);
-
-  if (options.hash) {
-    // eslint-disable-next-line no-param-reassign
-    url += options.hash;
-  }
-
-  if (options.maybeNeedQuotes && /[\t\n\f\r "'=<>`]/.test(url)) {
-    return "\"".concat(url, "\"");
-  }
-
-  return url;
 };
 
 /***/ }),
@@ -723,76 +682,6 @@ function styleTagTransform(css, styleElement) {
 
 module.exports = styleTagTransform;
 
-/***/ }),
-
-/***/ "./img/part1/1.jpg":
-/*!*************************!*\
-  !*** ./img/part1/1.jpg ***!
-  \*************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "235b8460b386baf143a0.jpg";
-
-/***/ }),
-
-/***/ "./img/part1/2.png":
-/*!*************************!*\
-  !*** ./img/part1/2.png ***!
-  \*************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "5a89ade4107be5eded35.png";
-
-/***/ }),
-
-/***/ "./img/part1/3.jpg":
-/*!*************************!*\
-  !*** ./img/part1/3.jpg ***!
-  \*************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "cb4c9ff207de77c90c23.jpg";
-
-/***/ }),
-
-/***/ "./img/part1/4.jpg":
-/*!*************************!*\
-  !*** ./img/part1/4.jpg ***!
-  \*************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "640a4791f4eae1a3915c.jpg";
-
-/***/ }),
-
-/***/ "./img/part1/5.jpeg":
-/*!**************************!*\
-  !*** ./img/part1/5.jpeg ***!
-  \**************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "f2f922d449d1810f7dd3.jpeg";
-
-/***/ }),
-
-/***/ "./img/part1/6.jpeg":
-/*!**************************!*\
-  !*** ./img/part1/6.jpeg ***!
-  \**************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "958b1d97d18ea8141303.jpeg";
-
-/***/ }),
-
-/***/ "./img/part1/7.png":
-/*!*************************!*\
-  !*** ./img/part1/7.png ***!
-  \*************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "b6eb33680b4a5f04c83c.png";
-
 /***/ })
 
 /******/ 	});
@@ -821,9 +710,6 @@ module.exports = __webpack_require__.p + "b6eb33680b4a5f04c83c.png";
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -849,18 +735,6 @@ module.exports = __webpack_require__.p + "b6eb33680b4a5f04c83c.png";
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -877,52 +751,6 @@ module.exports = __webpack_require__.p + "b6eb33680b4a5f04c83c.png";
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/publicPath */
-/******/ 	(() => {
-/******/ 		var scriptUrl;
-/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
-/******/ 		var document = __webpack_require__.g.document;
-/******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript)
-/******/ 				scriptUrl = document.currentScript.src
-/******/ 			if (!scriptUrl) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
-/******/ 			}
-/******/ 		}
-/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl;
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"main": 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		// no on chunks loaded
-/******/ 		
-/******/ 		// no jsonp function
-/******/ 	})();
-/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -932,20 +760,14 @@ var __webpack_exports__ = {};
   \********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/index.css */ "./css/index.css");
-/* harmony import */ var _html_main_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../html/main.html */ "./html/main.html");
-/* harmony import */ var _swipper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./swipper */ "./js/swipper.js");
-/* harmony import */ var _calculator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./calculator */ "./js/calculator.js");
+/* harmony import */ var _swiper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./swiper */ "./js/swiper.js");
+/* harmony import */ var _calc__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calc */ "./js/calc.js");
 
 
 
-
-
-
-
-
-_calculator__WEBPACK_IMPORTED_MODULE_3__.typeOfDeposit.addEventListener('change', _calculator__WEBPACK_IMPORTED_MODULE_3__.onTypeChange);
-_calculator__WEBPACK_IMPORTED_MODULE_3__.calcButton.addEventListener('click', _calculator__WEBPACK_IMPORTED_MODULE_3__.calcTerm);
-(0,_calculator__WEBPACK_IMPORTED_MODULE_3__.onTypeChange)();
+_calc__WEBPACK_IMPORTED_MODULE_2__.typeOfDeposit.addEventListener('change', _calc__WEBPACK_IMPORTED_MODULE_2__.onTypeChange);
+_calc__WEBPACK_IMPORTED_MODULE_2__.calcButton.addEventListener('click', _calc__WEBPACK_IMPORTED_MODULE_2__.calcTerm);
+(0,_calc__WEBPACK_IMPORTED_MODULE_2__.onTypeChange)();
 })();
 
 /******/ })()

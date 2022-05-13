@@ -8,7 +8,28 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 </head>
 <body>
-<div class="main">
+    <div class="list">
+        <div class="headd">
+            <img src="../img/logo.png" width="310px" />
+            <h2 class="name">Новосибирский Государственный Технический Университет</h2>
+            <h2 class="name2">Кафедра Автоматизированных систем управления</h2>
+            <h2 class="name2">Лабораторная работа 3</h2>
+            <h2 class="name2">Использование npm, webpack и
+                REST API</h2>
+            <div class="name3">
+                <div class="students">
+                    <p>Выполнили:</p>
+                    <p>Бычков А.К.</p>
+                    <p>Мишин Д.Т.</p>
+                </div>
+                <div class="teacher">
+                    <p>Проверила:</p>
+                    <p>Кирьянова Е.С.</p>
+                </div>
+            </div>
+        </div>
+<div class="content">
+
     <h2>Свайпер</h2>
     <div class="swiper">
         <div class="swiper-wrapper">
@@ -42,6 +63,18 @@
             <p id="calc_sol2"></p>
         </div>
     </div>
+    <main class="content">
+        <div class="vac">
+            <h2>Вакансии hh.ru</h2>
+            <div class="inputs">
+                <input placeholder="Название вакансии" id="vacancyId">
+                <input placeholder="Количество" type="number" id="vacancy_amount">
+            </div>
+            <button id="load_vacancy">Загрузить вакансии</button>
+            <div id="vacancy"></div>
+        </div>
+    </main>
+</div>
 </div>
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
